@@ -1,0 +1,15 @@
+l = [4,5,9,11,18,57,74,78,90,99,104,107]
+
+def binary_search(l, n, low, high):
+    if low > high:
+        return 0
+    else:
+        mid = (low+high)//2
+        if l[mid]==n:
+            return mid
+        elif n<l[mid]:
+            return binary_search(l,n,low,mid)
+        else:
+            return binary_search(l,n,mid+1,high)
+
+print(binary_search(l,9,0,11))
