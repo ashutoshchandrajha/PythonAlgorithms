@@ -1,7 +1,13 @@
-def fibonaci(n):
+import sys
+old = sys.getrecursionlimit()            #Checks the current recursion limit - Should be 1000
+print("Current recursion limit - ",old)
+sys.setrecursionlimit(1005)              #You could set your own recursion limit
+def good_fibonaci(n):
     if n<=1:
         return (n,0)
     else:
-        (a,b) = fibonaci(n-1)
+        (a,b) = good_fibonaci(n-1)
         return (a+b,a)
-print (fibonaci(4))
+
+print (fibonaci(1001))     #This works for 1001 because we set a new recursion limit
+#print (fibonacci(1006))   #This will give error - Maximum recursion depth reached
