@@ -1,0 +1,49 @@
+#Sum of all elements in List using recursion
+#O(n) memory and O(n) running time
+def linear_sum(l,n):
+    if n==0:
+        return 0
+    else:
+        return linear_sum(l,n-1)+l[n-1]
+
+#Sum of all elements in List using binary recursion
+#O(log(n)) memory and O(n) running time
+def binary_sum(l,start,stop):
+    if start>=stop:             #Zero elements in list
+        return 0
+    elif start==stop-1:           #One element in List
+        return l[start]
+    else:                       #Two or more elements in List
+        mid = (start+stop)//2
+        return binary_sum(l,start,mid)+binary_sum(l,mid,stop)
+
+#Reverse a list using recursion
+def reverse(l,start,stop):
+    if start<stop-1:
+        l[start],l[stop-1]=l[stop-1],l[start]
+        reverse(l,start+1,stop-1)
+
+#Calculate power function using recursion - O(n)
+def power(x,n):
+    if n==0:
+        return 1
+    else:
+        return x*power(x,n-1)
+
+#Calculate power function using recursion - O(log(n))
+def power(x,n):
+    if n==0:
+        return 1;
+    else:
+        partial = power(x,n//2)
+        result = partial*partial
+        if n%2 == 1:
+            result=result*x
+    return result
+
+#Factorial - Example of tail recursion
+def factorial(n,acc):
+    if n==0:
+        return acc
+    else:
+        return factorial(n-1,acc*n)
