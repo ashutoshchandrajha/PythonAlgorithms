@@ -76,3 +76,13 @@ def maximum(l,low,high):
 low=float("inf")
 high=float("-inf")
 max,min = maximum(l,low,high)
+
+#Palindrome check using recursion
+def palindrome(s):
+    if len(s)==0 or len(s)==1:
+        return 1
+    else:
+        if s[0]==s[len(s)-1]:
+            return palindrome(s[1:-1])
+        else:
+            return 0
