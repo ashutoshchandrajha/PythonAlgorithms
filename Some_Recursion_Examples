@@ -47,3 +47,19 @@ def factorial(n,acc):
         return acc
     else:
         return factorial(n-1,acc*n)
+
+#Harmonic - Example of tail recursion
+def harmonic(n,total):
+    if n==0:
+        return total
+    else:
+        return harmonic(n-1,total+(1/n))
+
+#Convert string to integers
+def string_to_integer(s):
+    if len(s)==0:
+        return 0
+    elif len(s)==1:
+        return int(s)
+    else:
+        return int(s[:1])*(pow(10,len(s)-1)) + string_to_integer(s[1:])
