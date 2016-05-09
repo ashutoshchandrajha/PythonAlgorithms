@@ -63,3 +63,16 @@ def string_to_integer(s):
         return int(s)
     else:
         return int(s[:1])*(pow(10,len(s)-1)) + string_to_integer(s[1:])
+
+#Calculate maximum and minimum using one function and recursion
+def maximum(l,low,high):
+    if len(l)==0:           #Zero element
+        return low,high
+    else:                   #Two or more elements
+        high = l[0] if l[0]>high else high
+        low  = l[0] if l[0]<low else low
+        return maximum(l[1:],low,high)
+
+low=float("inf")
+high=float("-inf")
+max,min = maximum(l,low,high)
