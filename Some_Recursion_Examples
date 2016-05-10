@@ -86,3 +86,27 @@ def palindrome(s):
             return palindrome(s[1:-1])
         else:
             return 0
+
+#Rearrange such that even values appear before odd values
+def arrange(l,pivot):
+    if pivot==len(l):
+        return l
+    if l[pivot]%2==1:
+        l.append(l[pivot])
+        del l[pivot]
+    return arrange(l,pivot+1)
+
+#Check if string has more vowels than constants
+def count(s,v,c):
+    if len(s)==0:
+        if v>c:
+            return True
+        else:
+            return False
+    else:
+        l=["a","e","i","o","u"]
+        if s[0] in l:
+            v+=1
+        else:
+            c+=1
+        return count(s[1:],v,c)
