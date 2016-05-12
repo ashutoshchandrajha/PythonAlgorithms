@@ -1,5 +1,11 @@
 # This module will double the list size when the list gets full and you need to append moer items
 
+"""
+Important thing to note :- Array size here is increasing in Geometric progression, which makes append operations 
+of the order of O(n). If array was increasing in Arithmetic progression, resize events will happen more often, 
+which will make it of the order of O(n^2)
+"""
+
 import ctypes
 
 class DynamicArray():
