@@ -1,0 +1,41 @@
+# This module will double the list size when the list gets full and you need to append moer items
+
+import ctypes
+
+class DynamicArray():
+    #Dynamic array class similar to the Python list
+
+    def __init__(self):
+        #Create an empty array
+        self._n = 0                                     #count actual elements
+        self._capacity = 1                              #default array capacity
+        self._A = self._make_array(self._capacity)      #low-level capacity
+
+    def __len__(self):
+        #Return number of elements stored in the array
+        return self._n
+
+    def __getitem__(self, k):
+        #Return element at index K
+        if not 0 <= k < self._n:
+            raise IndexError('invalid index')
+        return self._A[k]                               #retrieve from array
+
+    def append(self, obj):
+        #Add object to end of the array
+        if self._n == self._capacity:                   #check if not enough room
+            self.resize(2*self._capacity)               #double capacity
+        self._A[self._n] = obj
+        self._n += 1
+
+    def _resize(self, c):                               #non public utility
+        #Resize internal array to capacity c
+        B = self._make_array(c)                         #new bigger array
+        for k in range(self._n):
+            B[k] = self._A[k]
+        self._A = B                                     #Use the bigger array
+        self._capacity = c
+
+    def _make_array(self, c):                           #non public utility
+        #Return new array with capacity c
+        return (c*ctypes.py_object)()
