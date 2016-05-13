@@ -1,0 +1,16 @@
+l = [7,4,8,5,6,3,2,9,1]
+
+def insertion_sort(l):
+    if len(l)==0 or len(l) ==1:
+        return l
+    else:
+        for i in range(len(l)):
+            current = l[i]
+            k = i
+            while k>0 and l[k-1]>current:
+                l[k] = l[k-1]
+                k-=1
+            l[k] = current
+        return l
+
+print(insertion_sort(l))
