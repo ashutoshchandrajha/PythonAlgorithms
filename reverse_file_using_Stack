@@ -1,0 +1,49 @@
+class Empty(Exception):
+    #Error attempting to access an element from an empty container
+    pass
+
+class ArrayStack():
+    #LIFO Stack implementationusing Python list for storage
+    def __init__(self):
+        #Create empty stack
+        self._data = []                 #non public list instance
+
+    def __len__(self):
+        #Return number of element in stack
+        return len(self._data)
+
+    def is_empty(self):
+        #Return true if stack is empty
+        return len(self._data)==0
+
+    def push(self, e):
+        #add element to top of stack
+        return self._data.append(e)
+
+    def top(self):
+        #Return but do not remove element at top of stack
+        #Raise empty error exception if stack is empty
+        if self.is_empty():
+            raise Empty('Stack is empty')
+        return self._data[-1]
+
+    def pop(self):
+        #Remove and return last element of stack
+        #Raise empty error exception if stack is empty
+        if self.is_empty():
+            raise Empty('Stack is empty')
+        return self._data.pop()
+
+def reverse_file(filename):
+    #Overwrite given file with its contents reversed line by line
+    S=ArrayStack()
+    original = open(filename)
+    for line in original:
+        S.push(line.rstrip('\n'))
+    original.close()
+
+    #overwrite contents in LIFO order
+    output = open(filename, 'w')        #reopening the file overwrites the original
+    while not S.is_empty():
+        output.write(S.pop()+'\n')
+    output.close()
