@@ -24,6 +24,7 @@ class _DoublyLinkedBase():
 
     def is_empty(self):
         return self._size==0
+        
 
     def _insert_between(self,e,predecessor,successor):
         #add element between two existing node and return new node
