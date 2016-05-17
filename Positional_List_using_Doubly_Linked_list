@@ -104,7 +104,7 @@ class PositionalList(_DoublyLinkedBase):
     def __iter__(self):
         #generate a forward iteration of the elements of the list
         cursor = self.first()
-        while cursor in not None:
+        while cursor is not None:
             yield cursor.element()
             cursor=self.after(cursor)
 
