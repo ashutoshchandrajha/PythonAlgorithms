@@ -1,0 +1,76 @@
+class Empty(Exception):
+    pass
+
+class LinkedList():
+
+    class _Node():
+        def __init__(self,element,next):
+            self._element=element
+            self._next=next
+
+    def __init__(self):
+        self._head=None
+        self._size=0
+
+    def __len__(self):
+        return self._size
+
+    def is_empty(self):
+        return self._size==0
+
+    def _add_first(self,e):
+        self._head=self._Node(e,self._head)
+        self._size+=1
+
+    def _add_last(self,e):
+        pos= self._head
+        while pos._next!=None:
+            pos=pos._next
+        newnode=self._Node(e,pos._next)
+        pos._next=newnode
+        self._size+=1
+
+    def printList(self):
+        pos=self._head
+        while pos!=None:
+            print(pos._element)
+            pos=pos._next
+
+    def _delete_element(self,k):
+        if self.is_empty():
+            raise Empty('List is empty')
+        pos=self._head
+        if k==1:
+            answer = self._head._element
+            temp=self._head
+            self._head=self._head._next
+            temp._element=None
+            temp._next=None
+            return answer
+        index=1
+        while pos!=None and index<k-1:
+            pos=pos._next
+            index+=1
+        answer=pos._next._element
+        temp=pos._next
+        pos._next=pos._next._next
+        temp._next=None
+        temp._element=None
+        return answer
+
+
+if __name__=="__main__":
+    l = LinkedList()
+    l._add_first(8)
+    l._add_last(6)
+    l._add_first(2)
+    l._add_first(3)
+    l._add_last(9)
+    l._add_first(4)
+    l._add_last(0)
+    l._add_first(11)
+    l._add_last(77)
+    l._add_first(68)
+    s=l._delete_element(1)
+    l.printList()
+    print("deleted element = ",s)
