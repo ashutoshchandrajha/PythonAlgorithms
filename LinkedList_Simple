@@ -39,6 +39,8 @@ class LinkedList():
     def _delete_element(self,k):
         if self.is_empty():
             raise Empty('List is empty')
+        if k>self._size:
+            raise ValueError('List index out of bound')
         pos=self._head
         if k==1:
             answer = self._head._element
@@ -58,6 +60,38 @@ class LinkedList():
         temp._element=None
         return answer
 
+    def reverse_list_iterative(self):
+        temp = self._head
+        prev = None
+        while temp!=None:
+            next=temp._next
+            temp._next=prev
+            prev=temp
+            temp=next
+        self._head=prev
+
+    #copied from Internet
+    def _reverseUtil(self, curr, prev):
+        # If last node mark it head
+        if curr._next is None :
+            self._head = curr
+            # Update next to prev node
+            curr._next = prev
+            return
+        # Save curr.next node for recursive call
+        next = curr._next
+        # And update next
+        curr._next = prev
+        self._reverseUtil(next, curr)
+
+    # This function mainly calls reverseUtil()
+    # with previous as None
+    def reverse_list_recursive(self):
+        if self._head is None:
+            return
+        self._reverseUtil(self._head, None)
+
+
 
 if __name__=="__main__":
     l = LinkedList()
@@ -71,6 +105,9 @@ if __name__=="__main__":
     l._add_first(11)
     l._add_last(77)
     l._add_first(68)
-    s=l._delete_element(1)
+    s=l._delete_element(7)
     l.printList()
-    print("deleted element = ",s)
+    l.reverse_list_recursive()
+    print("Reversed List")
+    l.printList()
+    #print("deleted element = ",s)
