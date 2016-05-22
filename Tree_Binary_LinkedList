@@ -1,3 +1,55 @@
+class Empty(Exception):
+    pass
+
+class LinkedQueue():
+    #FIFO Queue implementation using a singly linked list
+
+    #Nested Node class
+    class _Node():
+        #Non public class for storing a singly linked Node
+        __slots__ = 'element','next'            #streamline memory usage
+        def __init__(self,element,next):
+            self._element = element
+            self._next = next
+
+    #Queue methods
+    def __init__(self):
+        #Create empty Queue
+        self._head = None
+        self._tail = None
+        self._size = 0
+
+    def __len__(self):
+        return self._size
+
+    def is_empty(self):
+        return len(self._size)==0
+
+    def first(self):
+        if self.is_empty():
+            raise Empty('Queue is empty')
+        return self._head._element
+
+    def dequeue(self):
+        if self.is_empty():
+            raise Empty('Queue is empty')
+        answer = self._head._element
+        self._head = self._head._next
+        self._size -= 1
+        if self.is_empty():                 #special case as Queue is empty
+            self._tail = None
+        return answer
+
+    def enqueue(self,e):
+        newest = self._Node(e,None)         #Node will be new tail Node
+        if self.is_empty():
+            self._head = newest             #previously empty
+        else:
+            self._tail._next = newest
+        self._tail = newest                 #Update reference to the tail node
+        self._size += 1
+
+
 class Tree():
     #Abstract base class representing a tree structure
 
@@ -77,6 +129,50 @@ class Tree():
             p = self.root()
         return self._height2(p)
 
+    def __iter__(self):
+        #Generate an iteration of tree's elements
+        for p in self.positions():              #use same order as positions
+            yield p.element()                   #but yield each element
+
+    def preOrder(self):
+        #generate preorder iteration of positions in the tree
+        if not self.is_empty():
+            for p in self._subtree_preorder(self.root()):   #start recursion
+                yield p
+
+    def _subtree_preorder(self,p):
+        #generate preorder iteration of positions in subtree root at p
+        yield p                         #visit p before its subtrees
+        for c in self.children(p):
+            for other in self._subtree_preorder(c): #do preorder of c's subtree
+                yield other             #yielding each to our caller
+
+    def postOrder(self):
+        #Generate postorder iteration of positions in the tree
+        if not self.is_empty():
+            for p in self._subtree_postorder(self.root()):
+                yield p
+
+    def _subtree_postorder(self,p):
+        for c in self.children(p):
+            for other in self._subtree_postorder(c):
+                yield other
+        yield p                         #visit p after its subtrees
+
+    def positions(self):
+        #Generate iteration of tree's positions
+        return self.preOrder()          #return entire preorder iteration
+
+    def breadthFirst(self):
+        if not self.is_empty():
+            fringe = LinkedQueue()          #known positions not yet yielded
+            fringe.enqueue(self.root())     #starting with root
+            while not fringe.is_empty():
+                p = fringe.dequeue()        #remove from front of queue
+                yield p                     #report this position
+                for c in self.children(p):
+                    fringe.enqueue(c)       #add children back of queue
+
 
 class BinaryTree(Tree):
     #Abstract base class representing a binary tree structure
@@ -104,6 +200,25 @@ class BinaryTree(Tree):
             yield self.left(p)
         if self.right(p) is not None:
             yield self.right(p)
+
+    def inOrder(self):
+        #Generate inorder iteration of positions in Tree class
+        if not self.is_empty():
+            for p in self._subtree_inorder(self.root()):
+                yield p
+
+    def _subtree_inorder(self,p):
+        if self.left(p) is not None:        #if left child exists, traverse its subtree
+            for other in self._subtree_inorder(self.left(p)):
+                yield other
+            yield p
+            if self.right(p) is not None:   #if right child exists, traverse its subtree
+                for other in self._subtree_inorder(self.right()):
+                    yield other
+
+    #override inherited version to make inorder the default
+    def positions(self):
+        return self.inOrder()               #make inorder the default
 
 
 class LinkedBinaryTree(BinaryTree):
@@ -249,3 +364,4 @@ class LinkedBinaryTree(BinaryTree):
             node._right=t2._root
             t2._root=None               #set t2 instance to empty
             t2._size=0
+            
