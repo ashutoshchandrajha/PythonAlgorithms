@@ -1,0 +1,31 @@
+    def __init__(self, contents=()):
+        """
+        Create a new priority queue
+
+        By default priority queue will be empty
+        If contents are given, it should be an
+        iterable sequence of (k,v) tuples specifying
+        the initial contents
+
+        """
+
+        self._data = [self._item(k,v) for k,v in contents]  #empty by default
+        if len(self._data) > 1:
+            self._heapify()
+
+    def heapify(self):
+        start = self._parent(len(self)-1)           #start at the parent of last leaf
+        for j in range(start, -1, -1):
+            self._downheap(j)
+
+    def _downheap(self,j):
+        if self._has_left(j):
+            left=self._left(j)
+            small_child = left
+            if self._has_right(j):
+                right=self._right(j)
+                if self._data[right] < self._data[left]:
+                    small_child = right
+            if self._data[small_child] < self._data[j]:
+                self._swap(j,small_child)
+                self._upheap(small_child)           #recur at position of small child
