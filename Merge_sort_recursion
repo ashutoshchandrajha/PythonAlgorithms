@@ -1,0 +1,32 @@
+l = [7,1,8,4,3,9,2,6,5,]
+
+def merge(s1,s2,s):
+    if len(s1)==0 and len(s2)==0:
+        return s
+    elif len(s1)==0:
+        s.append(s2[0])
+        return merge(s1,s2[1:],s)
+    elif len(s2)==0:
+        s.append(s1[0])
+        return merge(s1[1:],s2,s)
+    elif s1[0]<s2[0]:
+        s.append(s1[0])
+        return merge(s1[1:],s2,s)
+    else:
+        s.append(s2[0])
+        return merge(s1,s2[1:],s)
+
+def mergesort(l):
+    if len(l)<2:
+        return l
+    mid = len(l) // 2
+    s1 = mergesort(l[:mid])
+    s2 = mergesort(l[mid:])
+    k=[]
+    s = merge(s1,s2,k)
+    return s
+
+s = mergesort(l)
+print(s)
+
+# result was [1, 2, 3, 4, 5, 6, 7, 8, 9]
