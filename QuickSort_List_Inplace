@@ -1,0 +1,25 @@
+l = [4,6,3,9,1,2,5,8,7]
+
+def QuickSort(l):
+    Quick_Sort_Inplace(l,0,len(l)-1)
+
+def Quick_Sort_Inplace(l,start,end):
+    if start<end:
+        pIndex = partition(l,start,end)
+        Quick_Sort_Inplace(l,start,pIndex-1)
+        Quick_Sort_Inplace(l,pIndex+1,end)
+
+def partition(l,start,end):
+    pivot = l[end]
+    pIndex = start
+
+    for i in range(start,end):
+        if l[i]<pivot:
+            l[i],l[pIndex]=l[pIndex],l[i]
+            pIndex+=1
+    l[pIndex],l[end]=l[end],l[pIndex]
+    return pIndex
+
+QuickSort(l)
+
+print(l)
