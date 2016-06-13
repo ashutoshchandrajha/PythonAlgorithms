@@ -1,0 +1,38 @@
+def find_knuth_morris_prats(String,Pattern):
+    n = len(String)
+    m = len(Pattern)
+    if m == 0: return 0
+    fail =  compute_kmp_fail(Pattern)
+    j = 0                               #index into String
+    k = 0                               #index into Pattern
+    while j<n:
+        if String[j] == Pattern[k]:     #P[0:k+1] matched thus far
+            if k == m-1:                #match is complete
+                return j-m+1
+            j+=1
+            k+=1
+        elif k>0:
+            k = fail[k-1]               #reuse suffix of Pattern[0:k]
+        else:
+            j+=1
+    return -1
+
+def compute_kmp_fail(Pattern):
+    m = len(Pattern)
+    fail = [0]*m
+    j = 1
+    k = 0
+    while j<m:
+        if Pattern[j] == Pattern[k]:
+            fail[j] = k+1
+            j += 1
+            k += 1
+        elif k>0:
+            k = fail[k-1]
+        else:
+            j+=1
+    return fail
+
+String = "Ash is not going to office today"
+Pattern = " is n"
+print(find_knuth_morris_prats(String,Pattern))
