@@ -1,0 +1,30 @@
+l = [73, 10, 55, 48, 62, 79, 11,23,90,34,45]
+
+def Quick_select(l,k):
+    e=Quick_select_helper(l,0,len(l)-1,k)
+    return e
+
+def Quick_select_helper(l,start,end,k):
+    if start<=end:
+        pIndex = partition(l,start,end,k)
+        #print (pIndex)
+        if pIndex==k-1:
+            return l[pIndex]
+        elif k-1<pIndex:
+            return Quick_select_helper(l,start,pIndex-1,k)
+        else:
+            return Quick_select_helper(l,pIndex+1,end,k)
+
+def partition(l,start,end,k):
+    pivot = l[end]
+    pIndex = start
+    for i in range(start,end):
+        if l[i]<pivot:
+            l[i],l[pIndex]=l[pIndex],l[i]
+            pIndex+=1
+    l[end],l[pIndex]=l[pIndex],l[end]
+    return pIndex
+
+j = Quick_select(l,3)
+print(j)
+print(l)
