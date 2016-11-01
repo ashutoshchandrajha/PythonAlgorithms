@@ -1,0 +1,15 @@
+#this command will give the default encoding in python
+
+import sys
+
+print(sys.getdefaultencoding())
+
+"""
+
+for example in my case the default is utf-8. this is important when
+you open a file and it employs the wrong encoding
+
+utf-8
+
+Process finished with exit code 0
+"""
