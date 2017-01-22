@@ -1,0 +1,49 @@
+#Stack implemetation using python list
+
+class Stack():
+    def __init__(self):
+        self.s = []
+        self.size = 0
+
+    def push(self, val):
+        self.s.append(val)
+        self.size += 1
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack is Empty")
+            return -1
+        self.s.pop()
+        self.size -= 1
+        return 0
+
+    def peek(self):
+        if self.isEmpty():
+            print("Stack is empty")
+            return -1
+        return self.s[-1]
+
+    def isEmpty(self):
+        return len(self.s)==0
+
+    def __len__(self):
+        return len(self.s)
+
+    def printStack(self):
+        print(self.s)
+
+def main():
+    s = Stack()
+    for i in range(0,10,2):
+        s.push(i)
+    s.printStack()
+    s.pop()
+    print("Last value on stack is :")
+    print(s.peek())
+    print("Now i will delete entries on this stack until it is empty")
+    while len(s)!=1:
+        s.pop()
+    print(s.printStack())
+
+if __name__ == '__main__':
+    main()
